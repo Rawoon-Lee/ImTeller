@@ -29,7 +29,7 @@ export const sellCard = async (
   // '판매할 카드 url'
   const tokenURL = image
   //'판매할 카드의 token Id'
-  const tokenId = 1
+  const tokenId = 12
   // '판매가격'
   const price = 10
   console.log('거래 등록')

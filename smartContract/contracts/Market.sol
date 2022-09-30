@@ -5,13 +5,13 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/ERC20//IERC20.sol";
 import "@openzeppelin/contracts/token/ERC721/IERC721.sol";
 
-//v.5
+//v.8
 contract Market is Ownable {
     IERC721 public cardContract;
     IERC20 public coinContract;
     address private cardCA;
 
-    event NewDeal(address seller, uint256 cardId, uint256 price);
+    event NewDeal(address seller, uint256 cardId, uint256 price, address CA);
     event checkAddress(address CA);
 
     constructor(address _cardAddress) {
@@ -37,8 +37,7 @@ contract Market is Ownable {
         );
 
         Deal deal = new Deal(seller, _cardId, _price, cardCA);
-        emit NewDeal(seller, _cardId, _price);
-        emit checkAddress(address(deal));
+        emit NewDeal(seller, _cardId, _price, address(deal));
 
         return address(deal);
     }
@@ -60,6 +59,8 @@ contract Deal {
         address buyer,
         uint256 amount
     );
+    event check(address CA);
+    event stage(uint104 num);
 
     constructor(
         address _seller,
@@ -79,43 +80,68 @@ contract Deal {
     카드 구매
     warning: 함수 호출 전에 IERC20.approve로 코인송금 권한 부여 필요
     */
-    function purchase() public payable duringDeal returns (uint256) {
+    function purchase() public payable returns (uint256) {
         address buyer = msg.sender;
-
-        //0.거래조건 확인
+        emit check(buyer); //0.거래조건 확인
+        emit check(msg.sender);
+        emit check(seller);
         require(seller != buyer, "You can't buy your own Card");
+        emit stage(1);
 
         //1.SSF 송금
         coinContract.transferFrom(buyer, seller, price);
-
+        emit stage(2);
         //2. NFT 소유권 이전
         cardContract.transferFrom(seller, address(this), cardId);
+        emit stage(3);
         cardContract.transferFrom(address(this), buyer, cardId);
-
+        emit stage(4);
         //3. 거래 종료
         dealState = false;
-
         emit DealEnded(address(this), cardId, buyer, price);
+        return cardId;
+    }
+
+    function zero() public payable returns (uint256) {
+        address buyer = msg.sender;
+        emit check(buyer); //0.거래조건 확인
+        emit check(msg.sender);
+        emit check(seller);
+        require(seller != buyer, "You can't buy your own Card");
 
         return cardId;
     }
 
-    function cancelDeal() public payable duringDeal onlySeller returns (bool) {
-        //거래에게 준 권한 취소
-        cardContract.setApprovalForAll(address(this), false);
+    function one() public payable returns (uint256) {
+        address buyer = msg.sender;
+        //1.SSF 송금
+        emit stage(1);
+        coinContract.transferFrom(buyer, seller, price);
+        return cardId;
+    }
 
+    function two() public payable returns (address) {
+        address buyer = msg.sender;
+        emit stage(2);
+        //2. NFT 소유권 이전
+        cardContract.transferFrom(seller, address(this), cardId);
+        return buyer;
+    }
+
+    function three() public payable returns (uint256) {
+        address buyer = msg.sender;
+        emit stage(3);
+        cardContract.transferFrom(address(this), buyer, cardId);
+        //3. 거래 종료
+        dealState = false;
+        emit DealEnded(address(this), cardId, buyer, price);
+        return cardId;
+    }
+
+    function cancelDeal() public payable returns (bool) {
         //판매 상태를 완료로 전환
         dealState = false;
         emit DealCanceled(address(this), cardId, seller);
         return true;
-    }
-
-    modifier duringDeal() {
-        require(dealState, "Deal is not available");
-        _;
-    }
-    modifier onlySeller() {
-        require(msg.sender == seller, "Deal: You are not seller.");
-        _;
     }
 }
