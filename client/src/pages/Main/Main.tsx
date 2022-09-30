@@ -12,88 +12,88 @@ import { useBGM } from 'actions/hooks/useBGM'
 import { setModalState } from 'store/modules/util'
 
 export default function Main() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
+	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
-  return (
-    <Layout>
-      <div css={fullDisplay}>
-        <div className="cardLoc" css={cardCss}>
-          <div className="card">ImTeller</div>
-          <div className="blur"></div>
-        </div>
-        <button
-          onClick={() => {
-            navigate('/game')
-          }}
-        >
-          시작하기
-        </button>
-        <button
-          onClick={() => {
-            dispatch(setModalState('setting'))
-          }}
-        >
-          모달 띄우기
-        </button>
-        <Timer />
-      </div>
-    </Layout>
-  )
+	return (
+		<Layout>
+			<div css={fullDisplay}>
+				<div className="cardLoc" css={cardCss}>
+					<div className="card">ImTeller</div>
+					<div className="blur"></div>
+				</div>
+				<button
+					onClick={() => {
+						navigate('/game')
+					}}
+				>
+					시작하기
+				</button>
+				<button
+					onClick={() => {
+						dispatch(setModalState('setting'))
+					}}
+				>
+					모달 띄우기
+				</button>
+				<Timer />
+			</div>
+		</Layout>
+	)
 }
 const cardCss = css`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-  box-sizing: border-box;
+	min-height: 100vh;
+	display: flex;
+	align-items: center;
+	flex-direction: column;
+	padding-top: 2rem;
+	padding-bottom: 2rem;
+	box-sizing: border-box;
 
-  .card {
-    background: #191c29;
-    width: 43vh;
-    height: 65vh;
-    padding: 3px;
-    position: relative;
-    border-radius: 32px;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    display: flex;
-    font-size: 1.5em;
-    color: rgb(88 199 250 / 0%);
-    cursor: pointer;
-    font-family: cursive;
-    z-index: 100;
-  }
+	.card {
+		background: #191c29;
+		width: 43vh;
+		height: 65vh;
+		padding: 3px;
+		position: relative;
+		border-radius: 32px;
+		justify-content: center;
+		align-items: center;
+		text-align: center;
+		display: flex;
+		font-size: 1.5em;
+		color: rgb(88 199 250 / 0%);
+		cursor: pointer;
+		font-family: cursive;
+		z-index: 100;
+	}
 
-  .card:hover {
-    color: rgb(88 199 250 / 100%);
-    transition: color 1s;
-  }
-  .card:hover.blur {
-    animation: none;
-    opacity: 0;
-  }
+	.card:hover {
+		color: rgb(88 199 250 / 100%);
+		transition: color 1s;
+	}
+	.card:hover.blur {
+		animation: none;
+		opacity: 0;
+	}
 
-  .blur {
-    position: absolute;
-    content: '';
-    top: 15vh;
-    left: 0;
-    right: 0;
-    z-index: 1;
-    width: 43vh;
-    height: 65vh;
-    margin: 0 auto;
-    transform: scale(0.8);
-    filter: blur(12vh);
-    background-image: linear-gradient(45deg, #5ddcff, #3c67e3 43%, #4e00c2);
-    opacity: 1;
-    transition: opacity 0.5s;
-    // animation: spin 2.5s linear infinite;
-  }
+	.blur {
+		position: absolute;
+		content: '';
+		top: 15vh;
+		left: 0;
+		right: 0;
+		z-index: 1;
+		width: 43vh;
+		height: 65vh;
+		margin: 0 auto;
+		transform: scale(0.8);
+		filter: blur(12vh);
+		background-image: linear-gradient(45deg, #5ddcff, #3c67e3 43%, #4e00c2);
+		opacity: 1;
+		transition: opacity 0.5s;
+		// animation: spin 2.5s linear infinite;
+	}
 `
 // const moving = keyframes`
 // spin

@@ -25,42 +25,42 @@ import 'App.css'
 import 'style/fonts.css'
 
 export default function App() {
-  const currentUser = useSelector((state: any) => state.currentUser)
+	const currentUser = useSelector((state: any) => state.currentUser)
 
-  return (
-    <div>
-      <BrowserRouter>
-        <BgmLayer>
-          <ModalLayer>
-            <Routes>
-              <Route path="/" element={<Main />} />
-              <Route path="/mypage/:nick" element={<Mypage />} />
+	return (
+		<div>
+			<BrowserRouter>
+				<BgmLayer>
+					<ModalLayer>
+						<Routes>
+							<Route path="/" element={<Main />} />
+							<Route path="/mypage/:nick" element={<Mypage />} />
 
-              <Route path="/game" element={<GameList />} />
+							<Route path="/game" element={<GameList />} />
 
-              <Route path="/deal" element={<DealList />} />
-              <Route path="/deal/:dealId" element={<DealDetail />} />
-              <Route path="/rank" element={<Rank />} />
-              <Route path="/vote" element={<Vote />} />
-              <Route path="/faq" element={<FAQ />} />
-              {currentUser.nickname ? (
-                <>
-                  <Route path="/profileEdit" element={<ProfileEdit />} />
-                  <Route path="/game/:roomId" element={<Game />} />
-                  <Route path="/deal/register" element={<DealRegister />} />
-                  <Route path="/paint" element={<Paint />} />
-                </>
-              ) : (
-                <>
-                  <Route path="/login" element={<Login />} />
-                  <Route path="/signup" element={<Signup signup={true} />} />
-                </>
-              )}
-              <Route path="/*" element={<NotFound404 />} />
-            </Routes>
-          </ModalLayer>
-        </BgmLayer>
-      </BrowserRouter>
-    </div>
-  )
+							<Route path="/deal" element={<DealList />} />
+							<Route path="/deal/:dealId" element={<DealDetail />} />
+							<Route path="/rank" element={<Rank />} />
+							<Route path="/vote" element={<Vote />} />
+							<Route path="/faq" element={<FAQ />} />
+							{currentUser.nickname ? (
+								<>
+									<Route path="/profileEdit" element={<ProfileEdit />} />
+									<Route path="/game/:roomId" element={<Game />} />
+									<Route path="/deal/register" element={<DealRegister />} />
+									<Route path="/paint" element={<Paint />} />
+								</>
+							) : (
+								<>
+									<Route path="/login" element={<Login />} />
+									<Route path="/signup" element={<Signup signup={true} />} />
+								</>
+							)}
+							<Route path="/*" element={<NotFound404 />} />
+						</Routes>
+					</ModalLayer>
+				</BgmLayer>
+			</BrowserRouter>
+		</div>
+	)
 }

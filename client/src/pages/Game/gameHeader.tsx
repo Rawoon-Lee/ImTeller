@@ -8,18 +8,18 @@ import Timer from 'components/timer'
 import Setting from 'components/setting'
 
 export default function GameHeader(props: any) {
-  const { setState } = props
+	const { setState } = props
 
-  return (
-    <div css={headerCSS}>
-      <RoomInfo />
-      <Timer />
-      <Setting />
-    </div>
-  )
+	return (
+		<div css={headerCSS}>
+			<RoomInfo />
+			<Timer />
+			<Setting />
+		</div>
+	)
 }
 
 const headerCSS = css({
-  display: 'flex',
-  justifyContent: 'space-between',
+	display: 'flex',
+	justifyContent: 'space-between',
 })

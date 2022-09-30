@@ -13,32 +13,32 @@ import item5 from 'assets/image/item5.png'
 import item6 from 'assets/image/item6.png'
 
 export default function Item(props: any) {
-  const dispatch = useDispatch()
+	const dispatch = useDispatch()
 
-  const { itemId, grade, effect, effectNum } = props.item
-  const [effectPre, effectPost] = itemDetail(effect, effectNum) // effectPre는 hover했을 때
-  const [isDeal, setIsDeal] = useState(false)
+	const { itemId, grade, effect, effectNum } = props.item
+	const [effectPre, effectPost] = itemDetail(effect, effectNum) // effectPre는 hover했을 때
+	const [isDeal, setIsDeal] = useState(false)
 
-  const src = { 1: item1, 2: item2, 3: item3, 4: item4, 5: item5, 6: item6 }[effect]
+	const src = { 1: item1, 2: item2, 3: item3, 4: item4, 5: item5, 6: item6 }[effect]
 
-  useEffect(() => {
-    if (props.isDeal) {
-      setIsDeal(true)
-    }
-  }, [props.isDeal])
+	useEffect(() => {
+		if (props.isDeal) {
+			setIsDeal(true)
+		}
+	}, [props.isDeal])
 
-  const onClick = (event) => {
-    if (isDeal) return
-    if (event.detail !== 2) return
+	const onClick = (event) => {
+		if (isDeal) return
+		if (event.detail !== 2) return
 
-    dispatch(setItemState([effect, effectNum]))
-    dispatch(removeItem(itemId))
-  }
+		dispatch(setItemState([effect, effectNum]))
+		dispatch(removeItem(itemId))
+	}
 
-  return (
-    <div onClick={onClick}>
-      <img src={src} alt={effectPre} />
-      <div>{effectNum}</div>
-    </div>
-  )
+	return (
+		<div onClick={onClick}>
+			<img src={src} alt={effectPre} />
+			<div>{effectNum}</div>
+		</div>
+	)
 }

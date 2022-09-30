@@ -7,39 +7,39 @@ import { css } from '@emotion/react'
 import back from 'assets/image/arrow.png'
 
 const RoomInfo = (props: any) => {
-  const navigate = useNavigate()
-  const { roomId, roomName, isLocked, peopleNum, maxPeopleNum, type, typeNum } = useSelector(
-    (state: any) => state.roomInfo,
-  )
+	const navigate = useNavigate()
+	const { roomId, roomName, isLocked, peopleNum, maxPeopleNum, type, typeNum } = useSelector(
+		(state: any) => state.roomInfo,
+	)
 
-  return (
-    <div css={infos}>
-      <div css={backBtn} onClick={() => navigate(-1)}>
-        <img src={back} alt="뒤로 가기" css={imgSize} />
-      </div>
-      <div>{roomName}</div>
-      <div>{isLocked ? '비공개' : '공개'}</div>
-      <div>
-        {typeNum} {type === 'score' ? '점수' : '라운드'}
-      </div>
-      <div>
-        {peopleNum} / {maxPeopleNum}
-      </div>
-    </div>
-  )
+	return (
+		<div css={infos}>
+			<div css={backBtn} onClick={() => navigate(-1)}>
+				<img src={back} alt="뒤로 가기" css={imgSize} />
+			</div>
+			<div>{roomName}</div>
+			<div>{isLocked ? '비공개' : '공개'}</div>
+			<div>
+				{typeNum} {type === 'score' ? '점수' : '라운드'}
+			</div>
+			<div>
+				{peopleNum} / {maxPeopleNum}
+			</div>
+		</div>
+	)
 }
 export default RoomInfo
 
 const infos = css({
-  display: 'flex',
+	display: 'flex',
 })
 
 const backBtn = css({
-  cursor: 'pointer',
+	cursor: 'pointer',
 })
 
 const imgSize = css({
-  cursor: 'pointer',
-  width: '2em',
-  margin: 10,
+	cursor: 'pointer',
+	width: '2em',
+	margin: 10,
 })

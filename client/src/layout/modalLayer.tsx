@@ -14,34 +14,34 @@ import VoteRegisterModal from 'layout/modals/voteRegisterModal'
 import VoteModal from 'layout/modals/vote'
 
 export default function ModalLayer(props: any) {
-  const modalState = useSelector((state: any) => state.modalState)
+	const modalState = useSelector((state: any) => state.modalState)
 
-  const Modals = {
-    addWallet: <AddWalletModal />,
-    makeRoom: <MakeRoomModal />,
-    cardSelect: <CardSelectModal />,
-    alert: <AlertModal />,
-    confirm: <ConfirmModal />,
-    joinRoom: <JoinRoomModal />,
-    setting: <SettingModal />,
-    voteRegister: <VoteRegisterModal />,
-    vote: <VoteModal />,
-  }
+	const Modals = {
+		addWallet: <AddWalletModal />,
+		makeRoom: <MakeRoomModal />,
+		cardSelect: <CardSelectModal />,
+		alert: <AlertModal />,
+		confirm: <ConfirmModal />,
+		joinRoom: <JoinRoomModal />,
+		setting: <SettingModal />,
+		voteRegister: <VoteRegisterModal />,
+		vote: <VoteModal />,
+	}
 
-  return (
-    <div>
-      {props.children}
-      {modalState ? <ModalST>{Modals[modalState]}</ModalST> : null}
-    </div>
-  )
+	return (
+		<div>
+			{props.children}
+			{modalState ? <ModalST>{Modals[modalState]}</ModalST> : null}
+		</div>
+	)
 }
 
 const ModalST = styled.div`
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, 0.6);
+	position: fixed;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	z-index: 99;
+	background-color: rgba(0, 0, 0, 0.6);
 `
