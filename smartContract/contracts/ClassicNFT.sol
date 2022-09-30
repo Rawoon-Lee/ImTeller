@@ -27,6 +27,7 @@ contract ClassicNFT is ERC721URIStorage, Ownable {
     신규 NFT(ERC - 721) 생성
     @params: 그림 URI(_tokenURI)
     @return: 민팅된 카드id(db의 token_id)
+    선행조건: coinContract.approve(cardContract, cost) 필요
     */
     function create(string memory _tokenURI) public payable returns (uint256) {
         address owner = msg.sender;
