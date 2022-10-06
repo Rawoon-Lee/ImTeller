@@ -1,11 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { css } from '@emotion/react'
 
 import Items from 'pages/Game/items'
 import GameCard from 'pages/Game/gameCard'
 
 import { useModal } from 'actions/hooks/useModal'
 import { setTime } from 'store/modules/game'
+
+import { normalBtn } from 'style/commonStyle'
+import { input } from 'style/commonStyle'
+
+import card from 'assets/image/card1.webp'
 
 export default function GameTeller(props: any) {
 	const dispatch = useDispatch()
@@ -19,7 +25,10 @@ export default function GameTeller(props: any) {
 
 	const [setModalState, setModalMsg] = useModal('')
 	const [isImteller, setIsImteller] = useState(false)
-	const [tellerCard, setTellerCard] = useState<any>({})
+	const [tellerCard, setTellerCard] = useState<any>({
+		cardId: 1,
+		cardUrl: card,
+	})
 	const [descrip, setDescrip] = useState('')
 
 	const [isSubmit, setIsSubmit] = useState(false)
@@ -59,7 +68,6 @@ export default function GameTeller(props: any) {
 			dispatch(setTime(0))
 			return
 		} else {
-			// dispatch(setSubmit({ nickname, status: true }))
 			client.publish({
 				destination: `/pub/room/${roomId}/others`,
 				body: JSON.stringify({
@@ -74,31 +82,8 @@ export default function GameTeller(props: any) {
 	}
 
 	return (
-		<div>
-			<div>
-				{(phase === 'phase1' && isImteller) || (phase === 'phase2' && !isImteller) ? (
-					<>
-						{tellerCard && !isSubmit ? (
-							<div>
-								<img style={{ height: '100px' }} src={tellerCard.cardUrl} alt="" />
-							</div>
-						) : null}
-					</>
-				) : null}
-
-				{phase === 'phase1' && isImteller && (
-					<div>
-						<label htmlFor="description"></label>
-						<input id="description" type="text" onChange={(e) => setDescrip(e.target.value)} />
-					</div>
-				)}
-				{phase === 'phase2' && !isImteller && <span>{tellerMsg}</span>}
-
-				{isSubmit ? null : (phase === 'phase1' && isImteller) ||
-				  (phase === 'phase2' && !isImteller) ? (
-					<button onClick={onSubmit}>제출하기</button>
-				) : null}
-
+		<div css={tellerContainerCSS}>
+			<div css={msgCSS}>
 				{isImteller && phase === 'phase1' ? (
 					!isSubmit ? (
 						<div>당신은 텔러입니다. 한장의 카드를 고르고 작품설명을 적어주세요</div>
@@ -112,17 +97,109 @@ export default function GameTeller(props: any) {
 				) : null}
 			</div>
 
-			<div>
-				{gameCards.map((card) => (
-					<div key={card.cardId} onClick={() => setTellerCard(card)}>
-						<GameCard cardUrl={card.cardUrl} />
+			<div css={selectCSS}>
+				{(phase === 'phase1' && isImteller) || (phase === 'phase2' && !isImteller) ? (
+					<>
+						{tellerCard && !isSubmit ? (
+							<div>
+								<img css={selectedCardCSS} src={tellerCard.cardUrl} alt="" />
+							</div>
+						) : null}
+					</>
+				) : null}
+
+				{phase === 'phase1' && isImteller && (
+					<div>
+						<label htmlFor="description"></label>
+						<input
+							css={input}
+							id="description"
+							type="text"
+							onChange={(e) => setDescrip(e.target.value)}
+						/>
 					</div>
-				))}
+				)}
+				{phase === 'phase2' && !isImteller && <div>{tellerMsg}</div>}
+
+				{isSubmit ? null : (phase === 'phase1' && isImteller) ||
+				  (phase === 'phase2' && !isImteller) ? (
+					<button css={submitBtnCSS} onClick={onSubmit}>
+						제출하기
+					</button>
+				) : null}
 			</div>
 
-			<div>
-				<Items client={client} roomId={roomId} />
+			<div css={tableCSS}>
+				<div css={cardCSS}>
+					{gameCards.map((card) => (
+						<div key={card.cardId} onClick={() => setTellerCard(card)}>
+							<GameCard cardUrl={card.cardUrl} />
+						</div>
+					))}
+				</div>
+
+				<div css={itemCSS}>
+					<Items client={client} roomId={roomId} />
+				</div>
 			</div>
 		</div>
 	)
 }
+
+const tellerContainerCSS = css({
+	display: 'flex',
+	flexDirection: 'column',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	fontFamily: 'GmarketSansMedium',
+	color: 'white',
+	width: '100%',
+})
+
+const msgCSS = css`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`
+const selectedCardCSS = css`
+	width: 30px;
+	margin: 0 10px;
+`
+
+const selectCSS = css`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	// button {
+	// 	height: 30px;
+	// 	width: 100px;
+	// 	font-size: 15px;
+	// }
+`
+const submitBtnCSS = css`
+	width: 10em;
+	height: 4em;
+	border: 0;
+	border-radius: 12px;
+	margin: 1em;
+	padding: 10px 10px,
+	cursor: url('https://imtellercard.s3.ap-northeast-2.amazonaws.com/brushClick.png'), auto;
+`
+
+const tableCSS = css({
+	display: 'flex',
+	justifyContent: 'space-between',
+	alignItems: 'center',
+	width: '100%',
+})
+
+const cardCSS = css({
+	display: 'flex',
+	width: '100px',
+})
+
+const itemCSS = css({
+	width: '18%',
+	maxWidth: '3em',
+})

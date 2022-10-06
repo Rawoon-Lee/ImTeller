@@ -36,8 +36,6 @@ import {
 	clearSelectedCards,
 } from 'store/modules/game'
 import art from 'actions/api/art'
-import { useBGM } from 'actions/hooks/useBGM'
-import { setBgmSrc } from 'store/modules/util'
 
 export default function Game() {
 	const dispatch = useDispatch()
@@ -56,7 +54,7 @@ export default function Game() {
 	const bgmVolume = useSelector((state: any) => state.bgmVolume)
 
 	const [ws, setWs] = useState<any>('')
-	const [state, setState] = useState(0) // 0 이면 gameRoom, 1이면 gamePlay, 2이면 gameResult
+	const [state, setState] = useState(0) // 0 이면 gameRoom, 1이면 gameTeller, gameChoice, gameResult, 2이면 gameEnd
 	const [turnResult, setTurnResult] = useState<any>([])
 	const [submitCards, setSubmitCards] = useState<any>([])
 	const [choiceCards, setChoiceCards] = useState<any>([])
@@ -68,6 +66,7 @@ export default function Game() {
 	// 게임화면에선 useBGM이 안먹힌다...
 	useEffect(() => {
 		const newBgm = new Audio(require('assets/audio/game.mp3'))
+		newBgm.loop = true
 		setBgm(newBgm)
 		return () => {
 			if (newBgm) newBgm.pause()
@@ -388,14 +387,19 @@ const playerOne = css({
 	justifyContent: 'center',
 })
 
-const mainComponentCSS = css({
-	display: 'flex',
-	justifyContent: 'space-between',
-})
-
 const gameContainerCSS = css({
 	display: 'flex',
-	width: '55vw',
+	flexDirection: 'row',
+	justifyContent: 'space-between',
+	width: '100%',
+})
+
+const mainComponentCSS = css({
+	display: 'flex',
+	flexDirection: 'row',
+	justifyContent: 'center',
+	width: '100%',
+	margin: '1em',
 })
 
 const chatCSS = css({

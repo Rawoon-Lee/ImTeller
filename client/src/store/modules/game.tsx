@@ -272,7 +272,7 @@ export const { setTeller } = teller.actions
 
 export const tellerMsg = createSlice({
 	name: 'tellerMsg',
-	initialState: '',
+	initialState: 'asdfasdfasdf',
 	reducers: {
 		setTellerMsg(state, action) {
 			return action.payload

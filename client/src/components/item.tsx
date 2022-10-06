@@ -19,12 +19,24 @@ export default function Item(props: any) {
 	const src = { 1: item1, 2: item2, 3: item3, 4: item4, 5: item5, 6: item6 }[effect]
 
 	return (
-		<div style={{ width: '50px' }}>
-			<img src={src} alt={effectPre} title={effectName} css={itemSizeCSS} />
-			<div>{effectNum}</div>
+		<div css={itemCSS}>
+			<img src={src} alt={effectPre} title={effectName} />
+			<p>{effectNum}</p>
 		</div>
 	)
 }
-const itemSizeCSS = css`
-	width: 40px;
+
+const itemCSS = css`
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	align-items: center;
+	margin: 5px 2px 8px 2px;
+
+	img {
+		width: 100%;
+	}
+	p {
+		margin: 0;
+	}
 `

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { css } from '@emotion/react'
 
 import GameCard from 'pages/Game/gameCard'
 
@@ -62,8 +63,16 @@ export default function GameChoice(props: any) {
 	}
 
 	return (
-		<div>
-			<div>
+		<div css={choiceContainerCSS}>
+			<div css={msgCSS}>
+				{isImteller ? (
+					<div>다른 사람들이 카드를 맞추는 중입니다.</div>
+				) : (
+					<div>작품설명으로 텔러의 그림을 맞춰주세요.</div>
+				)}
+			</div>
+
+			<div css={selectCSS}>
 				{!isImteller && choicedCard.cardUrl ? (
 					<GameCard
 						cardUrl={choicedCard.cardUrl}
@@ -74,16 +83,14 @@ export default function GameChoice(props: any) {
 				) : null}
 				<span>{tellerMsg}</span>
 
-				{isSubmit ? null : !isImteller ? <button onClick={onSubmit}>제출하기</button> : null}
-
-				{isImteller ? (
-					<div>다른 사람들이 카드를 맞추는 중입니다.</div>
-				) : (
-					<div>작품설명으로 텔러의 그림을 맞춰주세요.</div>
-				)}
+				{isSubmit ? null : !isImteller ? (
+					<button onClick={onSubmit} css={submitBtnCSS}>
+						제출하기
+					</button>
+				) : null}
 			</div>
 
-			<div>
+			<div css={cardCSS}>
 				{table.map((card) => (
 					<div key={card.cardId} onClick={() => setChoicedCard(card)}>
 						<GameCard
@@ -98,3 +105,39 @@ export default function GameChoice(props: any) {
 		</div>
 	)
 }
+
+const choiceContainerCSS = css`
+	font-family: GmarketSansMedium;
+	color: white;
+`
+
+const msgCSS = css`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+`
+const selectCSS = css`
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+
+	button {
+		height: 30px;
+		width: 100px;
+		font-size: 15px;
+	}
+`
+const submitBtnCSS = css`
+	width: 10em;
+	height: 4em;
+	border: 0;
+	border-radius: 12px;
+	margin: 1em;
+	font-family: GmarketSansMedium;
+	padding: 10px 10px,
+	cursor: url('https://imtellercard.s3.ap-northeast-2.amazonaws.com/brushClick.png'), auto;
+`
+const cardCSS = css({
+	display: 'flex',
+	width: '100px',
+})

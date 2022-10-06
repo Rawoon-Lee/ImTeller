@@ -6,6 +6,8 @@ import art from 'actions/api/art'
 import { setCardList } from 'store/modules/art'
 import { useModal } from 'actions/hooks/useModal'
 
+import { normalBtn } from 'style/commonStyle'
+
 export default function GameRoom(props: any) {
 	const dispatch = useDispatch()
 	const { nickname, client, roomId } = props
@@ -70,7 +72,7 @@ export default function GameRoom(props: any) {
 	return (
 		<div css={main}>
 			<button
-				css={button}
+				css={{ ...normalBtn, ...gameRoomBtn }}
 				onClick={() => {
 					setModalState('cardSelect')
 				}}
@@ -87,9 +89,13 @@ export default function GameRoom(props: any) {
 			</button> */}
 
 			{isLeader ? (
-				<button onClick={onStart}>게임 시작</button>
+				<button css={{ ...normalBtn, ...gameRoomBtn }} onClick={onStart}>
+					게임 시작
+				</button>
 			) : (
-				<button onClick={onReady}>{isReady ? '준비 취소' : '준비'}</button>
+				<button css={{ ...normalBtn, ...gameRoomBtn }} onClick={onReady}>
+					{isReady ? '준비 취소' : '준비'}
+				</button>
 			)}
 		</div>
 	)
@@ -97,12 +103,16 @@ export default function GameRoom(props: any) {
 
 const main = css({
 	display: 'flex',
-	justifyContent: 'space-evenly',
+	justifyContent: 'space-around',
+	alignItems: 'center',
 })
 
-const button = css({
+const gameRoomBtn = css({
 	width: '10em',
+	height: '4em',
+	border: 0,
 	borderRadius: 15,
 	margin: '1em',
-	cursor: 'pointer',
+	fontFamily: 'GmarketSansMedium',
+	cursor: `url('https://imtellercard.s3.ap-northeast-2.amazonaws.com/brushClick.png'), auto`,
 })

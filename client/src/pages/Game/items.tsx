@@ -1,4 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
+import { css } from '@emotion/react'
 
 import Item from 'components/item'
 import { addChat } from 'store/modules/game'
@@ -35,7 +36,7 @@ export default function Items(props: any) {
 	}
 
 	return (
-		<div>
+		<div css={itemsCSS}>
 			{items
 				.filter((item) => !item.used)
 				.map((item) => (
@@ -51,3 +52,12 @@ export default function Items(props: any) {
 		</div>
 	)
 }
+
+const itemsCSS = css`
+	background-color: rgb(0, 0, 0, 0.2);
+	border-radius: 30px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 60vh;
+`
