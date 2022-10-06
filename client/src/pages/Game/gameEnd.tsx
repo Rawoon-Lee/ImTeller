@@ -11,35 +11,35 @@ export default function GameEnd(props: any) {
 
 	const [endResult, setEndResult] = useState<any>([])
 
-	useEffect(() => {
-		setTimeout(() => {
-			setState(0)
-		}, 10000)
-	}, [])
+	// useEffect(() => {
+	// 	setTimeout(() => {
+	// 		setState(0)
+	// 	}, 10000)
+	// }, [])
 
-	useEffect(() => {
-		const confirm = client.subscribe(`/sub/room/${roomId}/roominfo`, (action) => {
-			const content = JSON.parse(action.body)
-			if (!content.started) {
-				setState(0)
-			}
-		})
-		client.publish({ destination: `/pub/room/${roomId}/roominfo` })
-		return () => {
-			confirm.unsubscribe()
-		}
-	}, [])
+	// useEffect(() => {
+	// 	const confirm = client.subscribe(`/sub/room/${roomId}/roominfo`, (action) => {
+	// 		const content = JSON.parse(action.body)
+	// 		if (!content.started) {
+	// 			setState(0)
+	// 		}
+	// 	})
+	// 	client.publish({ destination: `/pub/room/${roomId}/roominfo` })
+	// 	return () => {
+	// 		confirm.unsubscribe()
+	// 	}
+	// }, [])
 
-	useEffect(() => {
-		for (let nickname in result) {
-			endResult.push([result[nickname], nickname])
-		}
-		endResult.sort().reverse()
-		console.log(endResult)
-		return () => {
-			setEndResult([])
-		}
-	}, [])
+	// useEffect(() => {
+	// 	for (let nickname in result) {
+	// 		endResult.push([result[nickname], nickname])
+	// 	}
+	// 	endResult.sort().reverse()
+	// 	console.log(endResult)
+	// 	return () => {
+	// 		setEndResult([])
+	// 	}
+	// }, [])
 
 	const getProfile = (nickname) => {
 		return roomInfo.profiles[nickname]
@@ -84,11 +84,11 @@ export default function GameEnd(props: any) {
 			</div>
 
 			{endResult.slice(3).length ? (
-				<div css={verticalCenterCSS}>
+				<div css={resultInfoCSS}>
 					{endResult.slice(3).map((result, idx) => (
 						<div key={result[1]} css={verticalCenterCSS}>
 							<div>{idx + 4}등</div>
-							<img src={getProfile(result[1])} alt="" />
+							<img src={getProfile(result[1])} alt="" css={profileImgCSS} />
 							<div>
 								{result[1]} : {result[0]}점
 							</div>

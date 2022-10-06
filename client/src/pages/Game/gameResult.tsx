@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-
+import { css } from '@emotion/react'
 import GameCard from 'pages/Game/gameCard'
 import Item from 'components/item'
 import { useBGM } from 'actions/hooks/useBGM'
@@ -17,7 +17,8 @@ export default function GameResult(props: any) {
 		const use = []
 		itemState.map((item) => {
 			if (item.nickname === nickname) {
-				use.push(<Item key={item.cardId} item={item} style={{ width: '30px' }} />)
+				use.push(<Item key={item.cardId} item={item} />)
+				// use.push(<Item key={item.cardId} item={item} style={{ width: '30px' }} />)
 			}
 		})
 		console.log(use)
@@ -35,7 +36,9 @@ export default function GameResult(props: any) {
 		})
 		return (
 			<div style={isTeller ? { backgroundColor: 'red' } : null}>
-				{nickname} +{turnResult[nickname]} {itemUse(nickname)}
+				<div>카드 주인 {nickname}</div>
+				<div>+{turnResult[nickname]}점 획득</div>
+				<div>{itemUse(nickname)}</div>
 			</div>
 		)
 	}
@@ -59,7 +62,7 @@ export default function GameResult(props: any) {
 	}
 
 	return (
-		<div>
+		<div css={gamreResultCSS}>
 			{table.map((card) => (
 				<div key={card.cardId}>
 					{/* 카드 주인 */}
@@ -72,3 +75,8 @@ export default function GameResult(props: any) {
 		</div>
 	)
 }
+const gamreResultCSS = css`
+	font-family: 'GmarketSansMedium';
+	display: flex;
+	flex-wrap: wrap;
+`

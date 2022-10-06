@@ -80,6 +80,8 @@ export default function Paint() {
 			img.onload = function () {
 				context.drawImage(img, 0, 0)
 			}
+		} else {
+			context.fillStyle = 'white'
 		}
 	}, [])
 

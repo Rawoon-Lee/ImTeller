@@ -162,7 +162,7 @@ export const { setPlayers, setScore, setStatus, clearStatus, setReady2 } = playe
 
 export const phase = createSlice({
 	name: 'phase',
-	initialState: 0,
+	initialState: 'end',
 	reducers: {
 		setPhase(state, action) {
 			return action.payload
