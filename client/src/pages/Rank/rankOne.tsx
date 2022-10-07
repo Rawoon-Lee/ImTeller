@@ -2,9 +2,10 @@ import { css } from '@emotion/react'
 
 import PolygonLeft from 'assets/image/PolygonLeft.webp'
 import PolygonRight from 'assets/image/PolygonRight.webp'
+import { bestPaintProps } from './Rank'
 // export default function rankOne({ rankList }: { rankList: bestPaintProps | null }) {
 export default function rankOne(props: any) {
-	const { paintTitle, paintImageURL, designerNickname } = props.rankList.bestPaint
+	const bestPaint: bestPaintProps = props.rankList.bestPaint
 
 	return (
 		<div css={box}>
@@ -13,11 +14,11 @@ export default function rankOne(props: any) {
 				{props ? (
 					<div css={cardCSS}>
 						<div css={type0CSS}>
-							<img src={paintImageURL} alt="" css={imgCSS} />
+							<img src={bestPaint.paintImageURL} alt="" css={imgCSS} />
 						</div>
 						<div className="cardInfo">
-							<div id="title">{paintTitle}</div>
-							<div id="designer">{designerNickname}</div>
+							<div id="title">{bestPaint.paintTitle}</div>
+							<div id="designer">{bestPaint.designerNickname}</div>
 						</div>
 					</div>
 				) : null}
